@@ -29,7 +29,6 @@ func main() {
 	} else {
 		word := args[0]
 		url := "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
-		fmt.Println(url)
 		resp, err := http.Get(url)
 		if err != nil {
 			fmt.Println("Error: Problem with url.")
@@ -54,18 +53,19 @@ func main() {
 func printDefinitions(entries []Entry, partOfSpeech string) {
 	for _, entry := range entries {
 		for _, meaning := range entry.Meanings {
+
 			if partOfSpeech != "" && meaning.PartOfSpeech != partOfSpeech {
 				continue
 			}
 
 			// Header: Word (part of speech)
-			fmt.Printf("%s (%s)\n", capitalize(entry.Word), meaning.PartOfSpeech)
+			fmt.Printf("%s (%s):\n", capitalize(entry.Word), meaning.PartOfSpeech)
 
-			for _, def := range meaning.Definitions {
-				fmt.Printf("- %s\n", capitalize(def.Definition))
+			for i, def := range meaning.Definitions {
+				fmt.Printf("%d. %s\n", i+1, capitalize(def.Definition))
 			}
 
-			fmt.Println() // Blank line between sections
+			fmt.Println()
 		}
 	}
 }
