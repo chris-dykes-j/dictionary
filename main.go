@@ -35,6 +35,11 @@ func main() {
 			panic(err)
 		}
 
+		// TODO: Graceful exit.
+		if resp.StatusCode != http.StatusOK {
+			panic(fmt.Sprintf("Word not found."))
+		}
+
 		var entries []Entry
 		err = json.NewDecoder(resp.Body).Decode(&entries)
 		if err != nil {
