@@ -32,12 +32,12 @@ func main() {
 		resp, err := http.Get(url)
 		if err != nil {
 			fmt.Println("Error: Problem with url.")
-			panic(err)
+			return
 		}
 
-		// TODO: Graceful exit.
 		if resp.StatusCode != http.StatusOK {
-			panic(fmt.Sprintf("Word not found."))
+			fmt.Println("Word not found.")
+			return
 		}
 
 		var entries []Entry
